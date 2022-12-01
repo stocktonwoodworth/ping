@@ -4,6 +4,9 @@ import scala.io.StdIn.readLine
 
 /**
  * Rudimentary implementation of ping command
+ * Example (ping is used automatically when program runs, I.E. scala ping)
+ * -c 5 8.8.8.8
+ * Indexing[0, 1, 2]
  *
  * @author Stockton Woodworth
  */
@@ -11,30 +14,49 @@ object ping {
 
   /**
    * This function will ping the address
-   * TODO massive overhaul to support multiple ping options
    *
+   * @param count     - optional parameter for -c, number of pings
    * @param ipAddress - IP Address from cmd line argument
    * @throws java.net.UnknownHostException - Can't find host
    * @throws java.io.IOException           - I/O Exception
    */
   @throws(classOf[UnknownHostException])
   @throws(classOf[IOException])
-  def pingRequest(ipAddress: String): Unit = {
-    val address: InetAddress = InetAddress.getByName(ipAddress)
-    println("PING " + address)
+  def pingRequest(ipAddress: String, count: String): Unit = {
 
-    if (address.isReachable(5000))
-      println("Host is reachable")
-    else
-      println("Host unreachable")
+    val numPings = count.toInt
+    val address: InetAddress = InetAddress.getByName(ipAddress)
+
+    println("PING " + ipAddress)
+
+    // if count is used
+    if (numPings > 1) {
+      var i = 0
+      while (i < numPings) {
+
+        if (address.isReachable(5000))
+          println("Host is reachable")
+        else
+          println("IP Address: " + address)
+          println("Host unreachable")
+        i += 1
+      }
+    } else { // Count not used
+      if (address.isReachable(5000))
+        println("Host is reachable")
+      else
+        println("IP Address: " + address)
+        println("Host unreachable")
+    }
   }
 
   /**
    * Usage instructions
    */
   def printUsage(): Unit = {
-    println("ping [-c <count> or --count <count>] <IP Address>")
-    println("ping [-h or --help]\n")
+    println("ping [-c <count> or --count <count>] <IP Address>") // specify number of packets
+    println("ping [-s] <IP Address>") // Single packet
+    println("ping [-h or --help]\n") // Help
   }
 
   /**
@@ -50,6 +72,11 @@ object ping {
     val argsList = args.toList // create list of arguments
     type OptionMap = Map[Symbol, Any]
 
+    // Checks
+    //    println("argsList: " + argsList.toString())
+    //    println("argsList.last: " + argsList.last)
+    //    val ip: String = argsList.last
+
     /**
      * Pattern matching used as a Java or C switch statement. nextOption
      * will check for cmd line arguments from a list to check which ping
@@ -62,15 +89,13 @@ object ping {
     def nextOption(map: OptionMap, list: List[String]): OptionMap = {
       list match {
         case Nil => map
-        case ("-c" | "--count") :: _ => pingRequest(list.last); sys.exit(0)
+        case ("-c" | "--count") :: _ => pingRequest(argsList.last, argsList(1)); sys.exit(0)
         case ("-h" | "--help") :: _ => printUsage(); sys.exit(0)
+        case "-s" :: _ => pingRequest(argsList.last, "1"); sys.exit(0)
         case _ => printUsage(); sys.exit(0)
       }
     }
 
-    //    val newAddress = readLine("\nInput IP address: ")
-    //    for (i <- 0 to 100) pingRequest(newAddress)
-    val options = nextOption(Map(), argsList)
-    // println(options)
+    nextOption(Map(), argsList)
   }
 }

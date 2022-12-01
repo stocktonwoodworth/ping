@@ -4,9 +4,18 @@
 echo "Running..."
 
 scalac src/main/scala/ping.scala	# Compile program
+echo "TEST: ping"
 scala ping 							          # Run empty args
+echo "TEST: ping -h"
 scala ping -h 						        # Run -h arg
+echo "TEST: ping --help"
 scala ping --help 					      # Run --help arg
+echo "TEST: ping -s 8.8.8.8"
+scala ping -s 8.8.8.8             # Single ping
+echo "TEST: ping -c 5 8.8.8.8"
+scala ping -c 1 8.8.8.8           # run -c arg
+echo "TEST: ping -s www.google.com"
+scala ping -s www.google.com      # run with hostname
 
 echo "Cleaning environment..."
 
