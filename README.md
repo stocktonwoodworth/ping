@@ -1,5 +1,8 @@
 # Ping
-This program is a rudimentary implementation of the ping command. The current build does not ping addresses, only options currently supported are print usage.
+This program is a rudimentary implementation of the ping command. \
+**Bugs** \
+Ping -c and -s options aren't working from terminal; however, they do work in Intellij IDE.
+Tested on Windows running WSL and Ubuntu
 
 ## Run Program
 ### Option 1:
