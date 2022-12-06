@@ -6,13 +6,13 @@
     "scala"
   ],
   "argv": [
-    "C:\\Users\\Stockton\\.jdks\\corretto-17.0.4.1/bin/java",
+    "/home/stockton/.jdks/openjdk-19.0.1/bin/java",
     "-Xms100m",
     "-Xmx100m",
     "-classpath",
-    "C:/Users/Stockton/AppData/Roaming/JetBrains/IntelliJIdea2022.2/plugins/Scala/launcher/sbt-launch.jar",
+    "/home/stockton/.local/share/JetBrains/IntelliJIdea2022.3/Scala/launcher/sbt-launch.jar",
     "xsbt.boot.Boot",
     "-bsp",
-    "--sbt-launch-jar=C:/Users/Stockton/AppData/Roaming/JetBrains/IntelliJIdea2022.2/plugins/Scala/launcher/sbt-launch.jar"
+    "--sbt-launch-jar=/home/stockton/.local/share/JetBrains/IntelliJIdea2022.3/Scala/launcher/sbt-launch.jar"
   ]
 }

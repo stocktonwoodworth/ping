@@ -1,6 +1,7 @@
 import java.io.IOException
 import java.net.{InetAddress, UnknownHostException}
 import scala.io.StdIn.readLine
+import Console.{RED, GREEN, BLACK, BLUE, YELLOW, UNDERLINED, RESET}
 
 /**
  * Rudimentary implementation of ping command
@@ -13,6 +14,19 @@ import scala.io.StdIn.readLine
 object ping {
 
   /**
+   * Checks if host is reachable and provides console feedback
+   *
+   * @param address - InetAddress
+   */
+  private def reach(address: InetAddress): Unit ={
+    if (address.isReachable(5000))
+      println(s"$RESET${GREEN}Host reachable$RESET")
+    else
+      println("IP Address: " + address)
+      println(s"$RESET${RED}Host Unreachable$RESET")
+  }
+
+  /**
    * This function will ping the address
    *
    * @param count     - optional parameter for -c, number of pings
@@ -22,7 +36,7 @@ object ping {
    */
   @throws(classOf[UnknownHostException])
   @throws(classOf[IOException])
-  def pingRequest(ipAddress: String, count: String): Unit = {
+  private def pingRequest(ipAddress: String, count: String): Unit = {
 
     val numPings = count.toInt
     val address: InetAddress = InetAddress.getByName(ipAddress)
@@ -33,27 +47,18 @@ object ping {
     if (numPings > 1) {
       var i = 0
       while (i < numPings) {
-
-        if (address.isReachable(5000))
-          println("Host is reachable")
-        else
-          println("IP Address: " + address)
-          println("Host unreachable")
+        reach(address)
         i += 1
       }
     } else { // Count not used
-      if (address.isReachable(5000))
-        println("Host is reachable")
-      else
-        println("IP Address: " + address)
-        println("Host unreachable")
+      reach(address)
     }
   }
 
   /**
    * Usage instructions
    */
-  def printUsage(): Unit = {
+  private def printUsage(): Unit = {
     println("ping [-c <count> or --count <count>] <IP Address>") // specify number of packets
     println("ping [-s] <IP Address>") // Single packet
     println("ping [-h or --help]\n") // Help

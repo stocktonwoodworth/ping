@@ -4,17 +4,17 @@
 echo "Running..."
 
 scalac src/main/scala/ping.scala	# Compile program
-echo "TEST: ping"
+echo "\e[34mTEST: ping\e[0m"
 scala ping 							          # Run empty args
-echo "TEST: ping -h"
+echo "\e[34mTEST: ping -h\e[0m"
 scala ping -h 						        # Run -h arg
-echo "TEST: ping --help"
+echo "\e[34mTEST: ping --help\e[0m"
 scala ping --help 					      # Run --help arg
-echo "TEST: ping -s 8.8.8.8"
+echo "\e[34mTEST: ping -s 8.8.8.8\e[0m"
 scala ping -s 8.8.8.8             # Single ping
-echo "TEST: ping -c 5 8.8.8.8"
+echo "\e[34mTEST: ping -c 5 8.8.8.8\e[0m"
 scala ping -c 1 8.8.8.8           # run -c arg
-echo "TEST: ping -s www.google.com"
+echo "\e[34mTEST: ping -s www.google.com\e[0m"
 scala ping -s www.google.com      # run with hostname
 
 echo "Cleaning environment..."
@@ -32,8 +32,8 @@ path2=$PWD$file2
 #echo $path2
 
 # Clean up
-rm $path1
-rm $path2
+rm "$path1"
+rm "$path2"
 
 echo "Cleaning complete"
 
