@@ -1,7 +1,7 @@
 import java.io.IOException
-import java.net.{InetAddress, UnknownHostException}
+import java.net.{InetAddress, InetSocketAddress, Socket, UnknownHostException}
 import scala.io.StdIn.readLine
-import Console.{RED, GREEN, BLACK, BLUE, YELLOW, UNDERLINED, RESET}
+import Console.{BLACK, BLUE, GREEN, RED, RESET, UNDERLINED, YELLOW}
 
 /**
  * Rudimentary implementation of ping command
@@ -19,6 +19,7 @@ object ping {
    * @param address - InetAddress
    */
   private def reach(address: InetAddress): Unit ={
+
     if (address.isReachable(5000))
       println(s"$RESET${GREEN}Host reachable$RESET")
     else
@@ -92,15 +93,23 @@ object ping {
      * @return OptionMap
      */
     def nextOption(map: OptionMap, list: List[String]): OptionMap = {
-      list match {
-        case Nil => map
-        case ("-c" | "--count") :: _ => pingRequest(argsList.last, argsList(1)); sys.exit(0)
-        case ("-h" | "--help") :: _ => printUsage(); sys.exit(0)
-        case "-s" :: _ => pingRequest(argsList.last, "1"); sys.exit(0)
-        case _ => printUsage(); sys.exit(0)
-      }
+        list match {
+          case Nil => map
+          case ("-c" | "--count") :: _ => pingRequest(argsList.last, argsList(1)); sys.exit(0)
+          case ("-h" | "--help") :: _ => printUsage(); sys.exit(0)
+          case "-s" :: _ => pingRequest(argsList.last, "1"); sys.exit(0)
+          case _ => printUsage(); sys.exit(0)
+        }
     }
 
-    nextOption(Map(), argsList)
+    /* Try option map, catch and handle any exceptions that may occur */
+    try {
+      nextOption(Map(), argsList)
+    } catch {
+      case _: NumberFormatException => Console.err.println(s"${RED}Wrong usage, try: ping -c 5 'ipAddr'$RESET") // Color not necessary unless running a script
+        printUsage()
+      case e: IOException => e.printStackTrace()
+      case e: Exception => e.printStackTrace()
+    }
   }
 }

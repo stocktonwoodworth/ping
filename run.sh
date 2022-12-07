@@ -16,6 +16,7 @@ echo "\e[34mTEST: ping -c 5 8.8.8.8\e[0m"
 scala ping -c 1 8.8.8.8           # run -c arg
 echo "\e[34mTEST: ping -s www.google.com\e[0m"
 scala ping -s www.google.com      # run with hostname
+scala ping -c 8.8.8.8             # NumberFormatException
 
 echo "Cleaning environment..."
 
@@ -32,8 +33,8 @@ path2=$PWD$file2
 #echo $path2
 
 # Clean up
-rm "$path1"
-rm "$path2"
+rm $path1
+rm $path2
 
 echo "Cleaning complete"
 
