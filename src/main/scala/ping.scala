@@ -1,6 +1,7 @@
 import java.io.IOException
 import java.net.{InetAddress, InetSocketAddress, Socket, UnknownHostException}
 import scala.io.StdIn.readLine
+import scala.util.control.Breaks._
 import Console.{BLACK, BLUE, GREEN, RED, RESET, UNDERLINED, YELLOW}
 
 /**
@@ -13,18 +14,24 @@ import Console.{BLACK, BLUE, GREEN, RED, RESET, UNDERLINED, YELLOW}
  */
 object ping {
 
+  var received = 0
+  var lost = 0
+
   /**
    * Checks if host is reachable and provides console feedback
    *
    * @param address - InetAddress
    */
-  private def reach(address: InetAddress): Unit ={
+  private def reach(address: InetAddress): Unit = {
 
-    if (address.isReachable(5000))
+    if (address.isReachable(5000)) {
       println(s"$RESET${GREEN}Host reachable$RESET")
-    else
+      received += 1
+    } else {
       println("IP Address: " + address)
       println(s"$RESET${RED}Host Unreachable$RESET")
+      lost += 1
+    }
   }
 
   /**
@@ -93,13 +100,13 @@ object ping {
      * @return OptionMap
      */
     def nextOption(map: OptionMap, list: List[String]): OptionMap = {
-        list match {
-          case Nil => map
-          case ("-c" | "--count") :: _ => pingRequest(argsList.last, argsList(1)); sys.exit(0)
-          case ("-h" | "--help") :: _ => printUsage(); sys.exit(0)
-          case "-s" :: _ => pingRequest(argsList.last, "1"); sys.exit(0)
-          case _ => printUsage(); sys.exit(0)
-        }
+      list match {
+        case Nil => map
+        case ("-c" | "--count") :: _ => pingRequest(argsList.last, argsList(1)); sys.exit(0)
+        case ("-h" | "--help") :: _ => printUsage(); sys.exit(0)
+        case "-s" :: _ => pingRequest(argsList.last, "1"); sys.exit(0)
+        case _ => printUsage(); sys.exit(0)
+      }
     }
 
     /* Try option map, catch and handle any exceptions that may occur */
