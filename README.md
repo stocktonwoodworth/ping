@@ -73,9 +73,12 @@ ping [-s] <IP Address>
 ping [-h or --help]
 
 TEST: ping -s 8.8.8.8
-[sudo] password for stocktonwoodworth:
 PING 8.8.8.8
 Host reachable
+
+--- 8.8.8.8 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss
+
 TEST: ping -c 5 8.8.8.8
 PING 8.8.8.8
 Host reachable
@@ -83,13 +86,29 @@ Host reachable
 Host reachable
 Host reachable
 Host reachable
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss
+
 TEST: ping -s www.google.com
 PING www.google.com
 Host reachable
+
+--- www.google.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss
+
 Wrong usage, try: ping -c 5 'ipAddr'
 ping [-c <count> or --count <count>] <IP Address>
 ping [-s] <IP Address>
 ping [-h or --help]
+
+PING 8.8.8.8
+Host Unreachable
+Host Unreachable
+Host Unreachable
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss
 
 Cleaning environment...
 Cleaning complete
