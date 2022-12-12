@@ -17,6 +17,7 @@ sudo scala ping -c 5 8.8.8.8           # run -c arg
 echo "\e[34mTEST: ping -s www.google.com\e[0m"
 sudo scala ping -s www.google.com      # run with hostname
 scala ping -c 8.8.8.8             # NumberFormatException
+scala ping -c 3 8.8.8.8           # Host unreachable
 
 echo "Cleaning environment..."
 

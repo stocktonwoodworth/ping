@@ -28,7 +28,6 @@ object ping {
       println(s"$RESET${GREEN}Host reachable$RESET")
       received += 1
     } else {
-      println("IP Address: " + address)
       println(s"$RESET${RED}Host Unreachable$RESET")
       lost += 1
     }
@@ -61,6 +60,11 @@ object ping {
     } else { // Count not used
       reach(address)
     }
+
+    var percent = lost / numPings * 100
+
+    println("\n--- " + ipAddress + " ping statistics ---")
+    println(numPings + " packets transmitted, " + received + " received, " + percent + "% packet loss\n")
   }
 
   /**
